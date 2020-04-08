@@ -48,11 +48,11 @@ public class BookStoreInformation {
 
 	@Column(name = "price")
 	@NotNull(message = "price cannot be blank")
-	@DecimalMin("50.0")
+	@DecimalMin(value ="10.0", message="price should be greater than or equal to {value}")
 	BigDecimal price;
 
 	@Column(name = "copies")
-	@Min(1)
+	@Min(value = 1, message="numberOfCopies should be greater than or equal to {value}" )
 	Integer numberOfCopies;
 
 	@Version
