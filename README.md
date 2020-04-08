@@ -3,9 +3,9 @@
 ## environment details
 Dev, Qa  and Prod environments are supported on this application.
 
-databse for dev:-  jdbc:h2:file:C:/data/BookStoreDev
-databse for qa:-  jdbc:h2:file:C:/data/BookStoreQa
-databse for prod:- jdbc:h2:file:C:/data/BookStoreProd
+databse for dev:-  jdbc:h2:file:C:/data/BookStoreDev     username=dev password=
+databse for qa:-  jdbc:h2:file:C:/data/BookStoreQa       username=qa password=
+databse for prod:- jdbc:h2:file:C:/data/BookStoreProd    username=prod password=
 
 
 ## instructions to launch
