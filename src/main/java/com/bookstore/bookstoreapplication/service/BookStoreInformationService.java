@@ -52,7 +52,7 @@ public class BookStoreInformationService {
 
 		if (Objects.nonNull(bookStoreInformation)) {
 			if (Objects.isNull(eTagHeader) || !(eTagHeader.equals(String.valueOf(bookStoreInformation.getVersion())))) {
-				throw new BookStoreInformationException(env.getProperty("error.book.incorrect.etag.message"),
+				throw new BookStoreInformationException(env.getProperty("error.duplicate.book.incorrect.etag.message"),
 						env.getProperty("error.book.incorrect.etag.code"));
 			}
 			if (bookStoreInformation.getAuthor().equalsIgnoreCase(book.getAuthor())
