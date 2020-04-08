@@ -1,7 +1,8 @@
 # BookStoreManagement
 
 ## environment details
-Dev, Qa Prod environments are supported on this application.
+Dev, Qa  and Prod environments are supported on this application.
+
 databse for dev:-  jdbc:h2:file:C:/data/BookStoreDev
 databse for qa:-  jdbc:h2:file:C:/data/BookStoreQa
 databse for prod:- jdbc:h2:file:C:/data/BookStoreProd
