@@ -175,7 +175,7 @@ public class BookStoreInformationController {
 				() -> new BookStoreInformationException(env.getProperty("error.book.isbn.not.found.message"),
 						env.getProperty("error.book.isbn.not.found.code")));
 		bookInformationRepository.deleteById(bookInformation.getId());  
-		return ResponseEntity.ok().build();
+		return ResponseEntity.noContent().build();
 
 	}
 
