@@ -88,7 +88,7 @@ public class BookStoreInformationService {
 			throw new BookStoreInformationException(env.getProperty("error.book.incorrect.etag.message"),
 					env.getProperty("error.book.incorrect.etag.code"));
 		}
-		if (quantity > bookStoreInformation.getNumberOfCopies()) {
+		if (quantity < 0 || quantity > bookStoreInformation.getNumberOfCopies()) {
 			throw new BookStoreInformationException(env.getProperty("error.book.incorrect.quantity.message") + "We have Only " + bookStoreInformation.getNumberOfCopies() + " copies left.",
 					env.getProperty("error.book.incorrect.quantity.code"));
 		} else {

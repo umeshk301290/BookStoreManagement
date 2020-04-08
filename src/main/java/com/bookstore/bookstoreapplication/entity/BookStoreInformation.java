@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -51,6 +52,7 @@ public class BookStoreInformation {
 	BigDecimal price;
 
 	@Column(name = "copies")
+	@Min(1)
 	Integer numberOfCopies;
 
 	@Version

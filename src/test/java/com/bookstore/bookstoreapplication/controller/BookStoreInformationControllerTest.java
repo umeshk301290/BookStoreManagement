@@ -258,5 +258,33 @@ public class BookStoreInformationControllerTest {
 		bookStoreInformationController.buyBook("1",information.getIsbn(),1);
 
 	}
+	
+	@Test
+	public void removeBook() throws BookStoreInformationException {
+		BookStoreInformation newBookInformation = new BookStoreInformation();
+		newBookInformation.setAuthor("Henry");
+		newBookInformation.setIsbn("123-45");
+		newBookInformation.setNumberOfCopies(1);
+		newBookInformation.setVersion(1L);
+		ResponseEntity<BookStoreInformation> response = new ResponseEntity(HttpStatus.OK);
+		when(bookInformationRepository.findbyIsbn(any())).thenReturn(Optional.of(newBookInformation));
+		assertTrue(bookStoreInformationController.removeBook(newBookInformation.getIsbn()) instanceof ResponseEntity);
+
+	}
+
+	@Test(expected = BookStoreInformationException.class)
+	public void removeBookExceptionTest() throws BookStoreInformationException {
+		BookStoreInformation information = new BookStoreInformation();
+		information.setAuthor("Henry");
+		information.setIsbn("123-45");
+		BookStoreInformation newBookInformation = new BookStoreInformation();
+		newBookInformation.setAuthor("Henry");
+		newBookInformation.setIsbn("123-45");
+		newBookInformation.setNumberOfCopies(1);
+		when(bookInformationRepository.findbyIsbn(any())).thenReturn(Optional.empty());
+		bookStoreInformationController.removeBook(information.getIsbn());
+
+	}
+
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -159,6 +160,22 @@ public class BookStoreInformationController {
 						env.getProperty("error.book.author.not.found.code")));
 
 		return ResponseEntity.ok().body(bookInformationList);
+
+	}
+	
+	/**
+	 * @param isbn
+	 * @return
+	 * @throws BookStoreInformationException
+	 */
+	@DeleteMapping(value = "/delete/book/{isbn}")
+	public ResponseEntity removeBook(@PathVariable("isbn") String isbn)
+			throws BookStoreInformationException {
+		BookStoreInformation bookInformation = bookInformationRepository.findbyIsbn(isbn).orElseThrow(
+				() -> new BookStoreInformationException(env.getProperty("error.book.isbn.not.found.message"),
+						env.getProperty("error.book.isbn.not.found.code")));
+		bookInformationRepository.deleteById(bookInformation.getId());  
+		return ResponseEntity.ok().build();
 
 	}
 
