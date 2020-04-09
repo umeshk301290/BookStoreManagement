@@ -55,8 +55,6 @@ public class BookStoreInformation {
 	@Min(value = 1, message="numberOfCopies should be greater than or equal to {value}" )
 	Integer numberOfCopies;
 
-	@Version
-	private Long version;
 
 	@Override
 	public boolean equals(Object o) {

@@ -46,11 +46,7 @@ public class BookStoreInformationExceptionHandler extends ResponseEntityExceptio
 					HttpStatus.BAD_REQUEST);
 
 		}
-		if (ex.getErrorCode().equals("412")) {
-			return new ResponseEntity<APIBookStoreInformationException>(aPIBookInformationException,
-					HttpStatus.PRECONDITION_FAILED);
 
-		}
 		return new ResponseEntity<APIBookStoreInformationException>(aPIBookInformationException,
 				HttpStatus.INTERNAL_SERVER_ERROR);
 
@@ -74,19 +70,5 @@ public class BookStoreInformationExceptionHandler extends ResponseEntityExceptio
 		return new ResponseEntity<Object>(aPIBookInformationException, HttpStatus.BAD_REQUEST);
 	}
 
-	/**
-	 * @param ex
-	 * @return
-	 */
-	@ExceptionHandler(OptimisticLockException.class)
-	public ResponseEntity<APIBookStoreInformationException> displayOptimisticLockException(OptimisticLockException ex) {
-
-		APIBookStoreInformationException aPIBookInformationException = new APIBookStoreInformationException();
-		aPIBookInformationException.setErrorCode("409");
-		aPIBookInformationException.setErrorMessage(ex.getMessage());
-		aPIBookInformationException.setTimeStamp(new Date().getTime());
-		return new ResponseEntity<APIBookStoreInformationException>(aPIBookInformationException, HttpStatus.CONFLICT);
-
-	}
 
 }
