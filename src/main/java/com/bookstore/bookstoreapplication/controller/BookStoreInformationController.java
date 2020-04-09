@@ -15,6 +15,8 @@ import com.bookstore.bookstoreapplication.entity.BookStoreInformation;
 import com.bookstore.bookstoreapplication.exception.BookStoreInformationException;
 import com.bookstore.bookstoreapplication.repository.BookStoreInformationRepository;
 import com.bookstore.bookstoreapplication.service.BookStoreInformationService;
+import com.bookstore.bookstoreapplication.service.impl.BookStoreInformationServiceImpl;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,8 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BookStoreInformationController {
 
-	@Autowired
-	BookStoreInformationRepository bookInformationRepository;
+
 
 	@Autowired
 	BookStoreInformationService bookInformationService;
@@ -94,7 +95,7 @@ public class BookStoreInformationController {
 	@GetMapping(value = "books/mediacoverage/{isbn}")
 	public ResponseEntity<List<String>> searchMediaCoverage(@PathVariable("isbn") String isbn)
 			throws BookStoreInformationException {
-		ResponseEntity<List<String>> responseList = bookInformationService.fetchMediaCoverage(isbn);
+		ResponseEntity<List<String>> responseList = bookInformationService.searchMediaCoverage(isbn);
 		return responseList;
 
 	}

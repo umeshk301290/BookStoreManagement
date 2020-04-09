@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import com.bookstore.bookstoreapplication.buisness.BookStoreInformationBusiness;
+import com.bookstore.bookstoreapplication.buisness.impl.BookStoreInformationBusinessImpl;
 import com.bookstore.bookstoreapplication.entity.BookStoreInformation;
 import com.bookstore.bookstoreapplication.exception.BookStoreInformationException;
 import com.bookstore.bookstoreapplication.model.MediaCoverageInformation;
@@ -33,7 +34,7 @@ import static org.mockito.Mockito.when;
 public class BookStoreInformationBusinessTest {
 
 	@InjectMocks
-	BookStoreInformationBusiness bookStoreInformationBusiness;
+	BookStoreInformationBusinessImpl bookStoreInformationBusiness;
 
 	@Mock
 	Environment env;

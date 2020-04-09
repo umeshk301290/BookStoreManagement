@@ -77,18 +77,7 @@ public class BookStoreInformationControllerTest {
 
 	}
 
-	/*
-	 * @Test(expected = BookStoreInformationException.class) public void
-	 * fetchBookBasedOnIsbnException() throws BookStoreInformationException {
-	 * BookStoreInformation information = new BookStoreInformation();
-	 * information.setAuthor("Henry"); information.setIsbn("123-45");
-	 * information.setTitle("Maths"); information.setNumberOfCopies(4);
-	 * 
-	 * when(bookInformationRepository.findbyIsbn(any())).thenReturn(Optional.empty()
-	 * ); bookStoreInformationController.fetchBookBasedOnIsbn("123-23");
-	 * 
-	 * }
-	 */
+
 
 	@Test
 	public void fetchBookBasedOnAuthor() throws BookStoreInformationException {
@@ -147,20 +136,11 @@ public class BookStoreInformationControllerTest {
 		information.setNumberOfCopies(3);
 		List<String> titleList = Arrays.asList("Maths", "English");
 		ResponseEntity<List<String>> response = new ResponseEntity<List<String>>(titleList, HttpStatus.OK);
-		when(bookInformationService.fetchMediaCoverage(any())).thenReturn(response);
+		when(bookInformationService.searchMediaCoverage(any())).thenReturn(response);
 		assertTrue(bookStoreInformationController.searchMediaCoverage("123-45") instanceof ResponseEntity);
 
 	}
 
-	/*
-	 * @Test(expected = BookStoreInformationException.class) public void
-	 * searchMediaCoverageTestException() throws BookStoreInformationException {
-	 * ResponseEntity<List<String>> response = null;
-	 * when(bookInformationService.searchMediaCoverage(any())).thenReturn(response);
-	 * bookStoreInformationController.searchMediaCoverage("123-45");
-	 * 
-	 * }
-	 */
 
 	@Test
 	public void buyBook() throws BookStoreInformationException {
@@ -177,21 +157,5 @@ public class BookStoreInformationControllerTest {
 		assertTrue(bookStoreInformationController.buyBook("123", 1) instanceof ResponseEntity);
 
 	}
-	/*
-	 * @Test(expected = BookStoreInformationException.class) public void
-	 * buyBookExceptionTest() throws BookStoreInformationException {
-	 * BookStoreInformation information = new BookStoreInformation();
-	 * information.setAuthor("Henry"); information.setIsbn("123-45");
-	 * BookStoreInformation newBookInformation = new BookStoreInformation();
-	 * newBookInformation.setAuthor("Henry"); newBookInformation.setIsbn("123-45");
-	 * newBookInformation.setNumberOfCopies(1);
-	 * when(bookInformationRepository.findbyIsbn(any())).thenReturn(Optional.empty()
-	 * ); bookStoreInformationController.buyBook("1",information.getIsbn(),1);
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+
 }

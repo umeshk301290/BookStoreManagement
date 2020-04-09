@@ -20,13 +20,13 @@ import com.bookstore.bookstoreapplication.buisness.BookStoreInformationBusiness;
 import com.bookstore.bookstoreapplication.entity.BookStoreInformation;
 import com.bookstore.bookstoreapplication.exception.BookStoreInformationException;
 import com.bookstore.bookstoreapplication.repository.BookStoreInformationRepository;
-import com.bookstore.bookstoreapplication.service.BookStoreInformationService;
+import com.bookstore.bookstoreapplication.service.impl.BookStoreInformationServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BookStoreInformationServiceTest {
 
 	@InjectMocks
-	BookStoreInformationService bookStoreInformationService;
+	BookStoreInformationServiceImpl bookStoreInformationService;
 	
 	@Mock
 	BookStoreInformationBusiness bookStoreInformationBusiness;
@@ -144,7 +144,7 @@ public class BookStoreInformationServiceTest {
 	
 	ResponseEntity<List<String>> mediaCoverageResponseList = new ResponseEntity<List<String>>(mediaList,HttpStatus.OK);
 	when(bookStoreInformationBusiness.searchMediaCoverage(any())).thenReturn(mediaCoverageResponseList);
-	assertTrue(bookStoreInformationService.fetchMediaCoverage("123-45") instanceof ResponseEntity);
+	assertTrue(bookStoreInformationService.searchMediaCoverage("123-45") instanceof ResponseEntity);
 
 	}
 	
@@ -153,7 +153,7 @@ public class BookStoreInformationServiceTest {
 		List<String> mediaList = null;
 		ResponseEntity<List<String>> mediaCoverageResponseList = new ResponseEntity<List<String>>(mediaList,HttpStatus.OK);
 		when(bookStoreInformationBusiness.searchMediaCoverage(any())).thenReturn(null);
-		assertTrue(bookStoreInformationService.fetchMediaCoverage("123-45") instanceof ResponseEntity);
+		assertTrue(bookStoreInformationService.searchMediaCoverage("123-45") instanceof ResponseEntity);
 	}
 	
 	@Test
@@ -185,150 +185,5 @@ public class BookStoreInformationServiceTest {
 }
 
 	
-	/*@Test(expected=Exception.class)
-	public void checkFormediaCoverageException() throws BookStoreInformationException {
-	ReflectionTestUtils.setField(bookStoreInformationService, "mediaCoverageUrl", "http://media");
-	MediaCoverageInformation information = new MediaCoverageInformation();
-	information.setBody("maths");
-	information.setId("1");
-	information.setTitle("maths");
-	information.setUserId("2");
-	BookStoreInformation bookStoreInfomation = new BookStoreInformation();
-	bookStoreInfomation.setTitle("maths");
 	
-	List<MediaCoverageInformation> mediaList = Arrays.asList(information);
-	ResponseEntity<List<MediaCoverageInformation>> mediaCoverageResponseList = new ResponseEntity<List<MediaCoverageInformation>>(mediaList,HttpStatus.OK);
-	
-	Mockito.when(restTemplate.exchange(
-            Matchers.eq("http://media"),
-            Matchers.eq(HttpMethod.GET),
-            Matchers.<HttpEntity>any(),
-            Matchers.<ParameterizedTypeReference<List<MediaCoverageInformation>>>any())
-        ).thenThrow(new Exception());
-	bookStoreInformationService.searchMediaCoverage("123-45");
-
-	}
-*/
-
-	
-	/*	
-
-	@Test
-	public void buyBookTest() throws BookStoreInformationException {
-		// TODO Auto-generated method stub
-		BookStoreInformation information = new BookStoreInformation();
-		information.setAuthor("Henry");
-		information.setIsbn("123-45");
-		information.setTitle("Maths");
-		information.setNumberOfCopies(3);	
-		information.setVersion(1L);
-		when(bookInformationRepository.save(any())).thenReturn(information);
-		assertTrue(bookStoreInformationService.checkForAlreadyPresentBookForBuy("1",information,2) instanceof BookStoreInformation);
-		
-}
-	@Test
-	public void buyBookTestWithDelete() throws BookStoreInformationException {
-		// TODO Auto-generated method stub
-		BookStoreInformation information = new BookStoreInformation();
-		information.setAuthor("Henry");
-		information.setIsbn("123-45");
-		information.setTitle("Maths");
-		information.setNumberOfCopies(1);	
-		information.setVersion(1L);
-		assertNull(bookStoreInformationService.checkForAlreadyPresentBookForBuy("1",information,1));
-		
-}
-	
-	@Test(expected=BookStoreInformationException.class)
-	public void buyBookQuantityTest() throws BookStoreInformationException {
-		// TODO Auto-generated method stub
-		BookStoreInformation information = new BookStoreInformation();
-		information.setAuthor("Henry");
-		information.setIsbn("123-45");
-		information.setTitle("Maths");
-		information.setNumberOfCopies(1);	
-		information.setVersion(1L);
-		assertNull(bookStoreInformationService.checkForAlreadyPresentBookForBuy("1",information,4));
-		
-}
-
-	@Test(expected=BookStoreInformationException.class)
-	public void buyBookInvalidVersionTest() throws BookStoreInformationException {
-		// TODO Auto-generated method stub
-		BookStoreInformation information = new BookStoreInformation();
-		information.setAuthor("Henry");
-		information.setIsbn("123-45");
-		information.setTitle("Maths");
-		information.setNumberOfCopies(1);	
-		information.setVersion(2L);
-		assertNull(bookStoreInformationService.checkForAlreadyPresentBookForBuy("1",information,4));
-		
-}
-
-
-	@Test
-	public void checkFormediaCoverage() throws BookStoreInformationException {
-	ReflectionTestUtils.setField(bookStoreInformationService, "mediaCoverageUrl", "http://media");
-	MediaCoverageInformation information = new MediaCoverageInformation();
-	information.setBody("maths");
-	information.setId("1");
-	information.setTitle("maths");
-	information.setUserId("2");
-	BookStoreInformation bookStoreInfomation = new BookStoreInformation();
-	bookStoreInfomation.setTitle("maths");
-	
-	List<MediaCoverageInformation> mediaList = Arrays.asList(information);
-	ResponseEntity<List<MediaCoverageInformation>> mediaCoverageResponseList = new ResponseEntity<List<MediaCoverageInformation>>(mediaList,HttpStatus.OK);
-	when(bookInformationRepository.findbyIsbn(any())).thenReturn(Optional.of(bookStoreInfomation));
-	
-	Mockito.when(restTemplate.exchange(
-            Matchers.eq("http://media"),
-            Matchers.eq(HttpMethod.GET),
-            Matchers.<HttpEntity>any(),
-            Matchers.<ParameterizedTypeReference<List<MediaCoverageInformation>>>any())
-        ).thenReturn(mediaCoverageResponseList);
-	assertTrue(bookStoreInformationService.searchMediaCoverage("123-45") instanceof ResponseEntity);
-
-	}
-	
-	@Test(expected=BookStoreInformationException.class)
-	public void checkFormediaCoverageNotFound() throws BookStoreInformationException {
-	MediaCoverageInformation information = new MediaCoverageInformation();
-	information.setBody("maths");
-	information.setId("1");
-	information.setTitle("maths");
-	information.setUserId("2");
-	BookStoreInformation bookStoreInfomation = new BookStoreInformation();
-	bookStoreInfomation.setTitle("maths");
-	
-	when(bookInformationRepository.findbyIsbn(any())).thenReturn(Optional.empty());
-	
-	bookStoreInformationService.searchMediaCoverage("123-45");
-
-	}
-	
-	@Test(expected=Exception.class)
-	public void checkFormediaCoverageException() throws BookStoreInformationException {
-	ReflectionTestUtils.setField(bookStoreInformationService, "mediaCoverageUrl", "http://media");
-	MediaCoverageInformation information = new MediaCoverageInformation();
-	information.setBody("maths");
-	information.setId("1");
-	information.setTitle("maths");
-	information.setUserId("2");
-	BookStoreInformation bookStoreInfomation = new BookStoreInformation();
-	bookStoreInfomation.setTitle("maths");
-	
-	List<MediaCoverageInformation> mediaList = Arrays.asList(information);
-	ResponseEntity<List<MediaCoverageInformation>> mediaCoverageResponseList = new ResponseEntity<List<MediaCoverageInformation>>(mediaList,HttpStatus.OK);
-	
-	Mockito.when(restTemplate.exchange(
-            Matchers.eq("http://media"),
-            Matchers.eq(HttpMethod.GET),
-            Matchers.<HttpEntity>any(),
-            Matchers.<ParameterizedTypeReference<List<MediaCoverageInformation>>>any())
-        ).thenThrow(new Exception());
-	bookStoreInformationService.searchMediaCoverage("123-45");
-
-	}
-*/
 }
