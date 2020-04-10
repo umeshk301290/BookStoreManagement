@@ -22,6 +22,10 @@ public interface BookStoreInformationRepository extends JpaRepository<BookStoreI
 @Query("SELECT t FROM BookStoreInformation t where t.isbn = :isbn")
 public Optional<BookStoreInformation> findbyIsbn(@Param("isbn") String isbn);
 
+@Override
+@Lock(LockModeType.OPTIMISTIC)
+public BookStoreInformation save(BookStoreInformation bookInformation);
+
 @Query("SELECT t FROM BookStoreInformation t where t.author like %:author% ")
 public List<BookStoreInformation> findbyAuthor(@Param("author") String author);
 
