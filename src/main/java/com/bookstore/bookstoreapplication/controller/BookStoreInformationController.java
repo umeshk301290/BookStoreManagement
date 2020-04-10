@@ -65,7 +65,7 @@ public class BookStoreInformationController {
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
-	@GetMapping(value = "books/title/{title}")
+	@GetMapping(value = "books/titles/{title}")
 	public ResponseEntity<List<BookStoreInformation>> fetchBookBasedOnTitle(@PathVariable("title") String title)
 			throws BookStoreInformationException {
 		ResponseEntity<List<BookStoreInformation>> bookStoreInformationResponse = bookInformationService
@@ -78,7 +78,7 @@ public class BookStoreInformationController {
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
-	@GetMapping(value = "books/author/{author}")
+	@GetMapping(value = "books/authors/{author}")
 	public ResponseEntity<List<BookStoreInformation>> fetchBookBasedOnAuthor(@PathVariable("author") String author)
 			throws BookStoreInformationException {
 		ResponseEntity<List<BookStoreInformation>> bookStoreInformationResponse = bookInformationService
@@ -92,7 +92,7 @@ public class BookStoreInformationController {
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
-	@GetMapping(value = "books/mediacoverage/{isbn}")
+	@GetMapping(value = "books/mediacoverages/{isbn}")
 	public ResponseEntity<List<String>> searchMediaCoverage(@PathVariable("isbn") String isbn)
 			throws BookStoreInformationException {
 		ResponseEntity<List<String>> responseList = bookInformationService.searchMediaCoverage(isbn);
