@@ -109,7 +109,7 @@ public class BookStoreInformationServiceImpl implements BookStoreInformationServ
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
-	@Transactional(isolation = Isolation.REPEATABLE_READ)
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public ResponseEntity<BookStoreInformation> purchaseBook(String isbn, Integer quantity)
 			throws BookStoreInformationException {
 		// TODO Auto-generated method stub
