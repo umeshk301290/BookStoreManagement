@@ -21,6 +21,7 @@ import com.bookstore.bookstoreapplication.service.BookStoreInformationService;
  *
  */
 @Service
+@Transactional
 public class BookStoreInformationServiceImpl implements BookStoreInformationService {
 
 	@Autowired
@@ -52,6 +53,7 @@ public class BookStoreInformationServiceImpl implements BookStoreInformationServ
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
+	
 	public ResponseEntity<BookStoreInformation> fetchBookInformation(String isbn) throws BookStoreInformationException {
 		// TODO Auto-generated method stub
 		BookStoreInformation bookInformation = bookInformationRepository.findbyIsbn(isbn).orElseThrow(
@@ -109,7 +111,6 @@ public class BookStoreInformationServiceImpl implements BookStoreInformationServ
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
-	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public ResponseEntity<BookStoreInformation> purchaseBook(String isbn, Integer quantity)
 			throws BookStoreInformationException {
 		// TODO Auto-generated method stub

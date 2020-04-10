@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+@Transactional
 public class BookStoreInformationBusinessImpl implements BookStoreInformationBusiness{
 
 	@Autowired
@@ -121,7 +122,6 @@ public class BookStoreInformationBusinessImpl implements BookStoreInformationBus
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
-	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public BookStoreInformation purchaseBook(BookStoreInformation buyBookInformation, Integer quantity) throws BookStoreInformationException {
 		// TODO Auto-generated method stub
 		if (quantity < 0 || quantity > buyBookInformation.getNumberOfCopies()) {

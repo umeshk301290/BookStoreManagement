@@ -18,7 +18,7 @@ import com.bookstore.bookstoreapplication.entity.BookStoreInformation;
  *
  */
 public interface BookStoreInformationRepository extends JpaRepository<BookStoreInformation, Long> {
-
+@Lock(LockModeType.OPTIMISTIC)
 @Query("SELECT t FROM BookStoreInformation t where t.isbn = :isbn")
 public Optional<BookStoreInformation> findbyIsbn(@Param("isbn") String isbn);
 
