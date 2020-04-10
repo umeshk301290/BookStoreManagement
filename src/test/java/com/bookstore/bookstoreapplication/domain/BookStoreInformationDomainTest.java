@@ -1,4 +1,4 @@
-package com.bookstore.bookstoreapplication.business;
+package com.bookstore.bookstoreapplication.domain;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -21,8 +21,9 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import com.bookstore.bookstoreapplication.buisness.BookStoreInformationBusiness;
-import com.bookstore.bookstoreapplication.buisness.impl.BookStoreInformationBusinessImpl;
+
+import com.bookstore.bookstoreapplication.domain.BookStoreInformationDomain;
+import com.bookstore.bookstoreapplication.domain.impl.BookStoreInformationDomainImpl;
 import com.bookstore.bookstoreapplication.entity.BookStoreInformation;
 import com.bookstore.bookstoreapplication.exception.BookStoreInformationException;
 import com.bookstore.bookstoreapplication.model.MediaCoverageInformation;
@@ -31,10 +32,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class BookStoreInformationBusinessTest {
+public class BookStoreInformationDomainTest {
 
 	@InjectMocks
-	BookStoreInformationBusinessImpl bookStoreInformationBusiness;
+	BookStoreInformationDomainImpl bookStoreInformationBusiness;
 
 	@Mock
 	Environment env;

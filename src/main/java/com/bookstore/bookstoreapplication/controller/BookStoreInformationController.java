@@ -27,8 +27,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BookStoreInformationController {
 
-
-
 	@Autowired
 	BookStoreInformationService bookInformationService;
 
@@ -55,6 +53,7 @@ public class BookStoreInformationController {
 	@GetMapping(value = "/books/{isbn}")
 	public ResponseEntity<BookStoreInformation> fetchBookBasedOnIsbn(@PathVariable("isbn") String isbn)
 			throws BookStoreInformationException {
+		log.info("searching a book with isbn {} ", isbn);
 		ResponseEntity<BookStoreInformation> bookStoreInformationResponse = bookInformationService
 				.fetchBookInformation(isbn);
 		return bookStoreInformationResponse;
@@ -68,6 +67,7 @@ public class BookStoreInformationController {
 	@GetMapping(value = "books/titles/{title}")
 	public ResponseEntity<List<BookStoreInformation>> fetchBookBasedOnTitle(@PathVariable("title") String title)
 			throws BookStoreInformationException {
+		log.info("searching  books with title {} ", title);
 		ResponseEntity<List<BookStoreInformation>> bookStoreInformationResponse = bookInformationService
 				.fetchBookInformationFromTitle(title);
 		return bookStoreInformationResponse;
@@ -81,6 +81,7 @@ public class BookStoreInformationController {
 	@GetMapping(value = "books/authors/{author}")
 	public ResponseEntity<List<BookStoreInformation>> fetchBookBasedOnAuthor(@PathVariable("author") String author)
 			throws BookStoreInformationException {
+		log.info("searching  books with author {} ", author);
 		ResponseEntity<List<BookStoreInformation>> bookStoreInformationResponse = bookInformationService
 				.fetchBookInformationFromAuthor(author);
 		return bookStoreInformationResponse;
@@ -95,6 +96,7 @@ public class BookStoreInformationController {
 	@GetMapping(value = "books/mediacoverages/{isbn}")
 	public ResponseEntity<List<String>> searchMediaCoverage(@PathVariable("isbn") String isbn)
 			throws BookStoreInformationException {
+		log.info("searching  media coverages for book for isbn {} ", isbn);
 		ResponseEntity<List<String>> responseList = bookInformationService.searchMediaCoverage(isbn);
 		return responseList;
 

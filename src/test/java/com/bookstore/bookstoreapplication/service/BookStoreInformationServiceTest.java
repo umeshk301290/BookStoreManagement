@@ -16,7 +16,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.bookstore.bookstoreapplication.buisness.BookStoreInformationBusiness;
+
+import com.bookstore.bookstoreapplication.domain.BookStoreInformationDomain;
 import com.bookstore.bookstoreapplication.entity.BookStoreInformation;
 import com.bookstore.bookstoreapplication.exception.BookStoreInformationException;
 import com.bookstore.bookstoreapplication.repository.BookStoreInformationRepository;
@@ -29,7 +30,7 @@ public class BookStoreInformationServiceTest {
 	BookStoreInformationServiceImpl bookStoreInformationService;
 	
 	@Mock
-	BookStoreInformationBusiness bookStoreInformationBusiness;
+	BookStoreInformationDomain bookStoreInformationBusiness;
 
 	@Mock
 	BookStoreInformationRepository bookInformationRepository;

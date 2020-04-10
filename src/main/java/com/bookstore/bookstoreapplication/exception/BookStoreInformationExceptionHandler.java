@@ -35,19 +35,19 @@ public class BookStoreInformationExceptionHandler extends ResponseEntityExceptio
 	 * @return
 	 */
 	@ExceptionHandler(BookStoreInformationException.class)
-	public ResponseEntity<APIBookStoreInformationException> displayBookStoreInformationException(BookStoreInformationException ex) {
+	public ResponseEntity<BookStoreInformationExceptionConverter> displayBookStoreInformationException(BookStoreInformationException ex) {
 
-		APIBookStoreInformationException aPIBookInformationException = new APIBookStoreInformationException();
+		BookStoreInformationExceptionConverter aPIBookInformationException = new BookStoreInformationExceptionConverter();
 		aPIBookInformationException.setErrorCode(ex.getErrorCode());
 		aPIBookInformationException.setErrorMessage(ex.getErrorMessage());
 		aPIBookInformationException.setTimeStamp(new Date().getTime());
 		if (ex.getErrorCode().equals("400")) {
-			return new ResponseEntity<APIBookStoreInformationException>(aPIBookInformationException,
+			return new ResponseEntity<BookStoreInformationExceptionConverter>(aPIBookInformationException,
 					HttpStatus.BAD_REQUEST);
 
 		}
 
-		return new ResponseEntity<APIBookStoreInformationException>(aPIBookInformationException,
+		return new ResponseEntity<BookStoreInformationExceptionConverter>(aPIBookInformationException,
 				HttpStatus.INTERNAL_SERVER_ERROR);
 
 	}
@@ -60,7 +60,7 @@ public class BookStoreInformationExceptionHandler extends ResponseEntityExceptio
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		Map<String, Object> value = new HashMap<String, Object>();
-		APIBookStoreInformationException aPIBookInformationException = new APIBookStoreInformationException();
+		BookStoreInformationExceptionConverter aPIBookInformationException = new BookStoreInformationExceptionConverter();
 		aPIBookInformationException.setTimeStamp(new Date().getTime());
 		value.put("status", status.value());
 		List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(error -> error.getDefaultMessage())
@@ -68,6 +68,21 @@ public class BookStoreInformationExceptionHandler extends ResponseEntityExceptio
 		value.put("errors", errors);
 		aPIBookInformationException.setErrorMap(value);
 		return new ResponseEntity<Object>(aPIBookInformationException, HttpStatus.BAD_REQUEST);
+	}
+	
+	/**
+	 * @param ex
+	 * @return
+	 */
+	@ExceptionHandler(OptimisticLockException.class)
+	public ResponseEntity<BookStoreInformationExceptionConverter> displayOptimisticLockException(OptimisticLockException ex) {
+
+		BookStoreInformationExceptionConverter aPIBookInformationException = new BookStoreInformationExceptionConverter();
+		aPIBookInformationException.setErrorCode("409");
+		aPIBookInformationException.setErrorMessage(env.getProperty("error.optimistic.lock"));
+		aPIBookInformationException.setTimeStamp(new Date().getTime());
+		return new ResponseEntity<BookStoreInformationExceptionConverter>(aPIBookInformationException, HttpStatus.CONFLICT);
+
 	}
 
 

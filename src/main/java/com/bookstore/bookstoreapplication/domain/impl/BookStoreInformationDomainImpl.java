@@ -1,4 +1,4 @@
-package com.bookstore.bookstoreapplication.buisness.impl;
+package com.bookstore.bookstoreapplication.domain.impl;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
-import com.bookstore.bookstoreapplication.buisness.BookStoreInformationBusiness;
+import com.bookstore.bookstoreapplication.domain.BookStoreInformationDomain;
 import com.bookstore.bookstoreapplication.entity.BookStoreInformation;
 import com.bookstore.bookstoreapplication.exception.BookStoreInformationException;
 import com.bookstore.bookstoreapplication.model.MediaCoverageInformation;
@@ -27,8 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-@Transactional
-public class BookStoreInformationBusinessImpl implements BookStoreInformationBusiness{
+public class BookStoreInformationDomainImpl implements BookStoreInformationDomain{
 
 	@Autowired
 	Environment env;
@@ -49,6 +48,7 @@ public class BookStoreInformationBusinessImpl implements BookStoreInformationBus
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
+	
 	public ResponseEntity<BookStoreInformation> addBookInformation(BookStoreInformation bookStoreInformation,
 			BookStoreInformation book) throws BookStoreInformationException {
 		if (Objects.nonNull(bookStoreInformation)) {
@@ -63,6 +63,7 @@ public class BookStoreInformationBusinessImpl implements BookStoreInformationBus
 
 					bookStoreInformation.setNumberOfCopies(bookStoreInformation.getNumberOfCopies() + 1);
 				}
+				log.info("book  information is updated with quantity {} ",bookStoreInformation.getNumberOfCopies());
 				bookInformationRepository.save(bookStoreInformation);
 			} else {
 				throw new BookStoreInformationException(env.getProperty("error.book.incorrect.details.message"),
@@ -76,8 +77,9 @@ public class BookStoreInformationBusinessImpl implements BookStoreInformationBus
 			if (Objects.isNull(book.getNumberOfCopies())) {
 				book.setNumberOfCopies(1);
 			}
-
+            
 			BookStoreInformation bookInformation = bookInformationRepository.save(book);
+			log.info("book  information is added with quantity {} ",bookInformation.getNumberOfCopies());
 			return new ResponseEntity<BookStoreInformation>(bookInformation, HttpStatus.CREATED);
 
 		}
@@ -88,6 +90,7 @@ public class BookStoreInformationBusinessImpl implements BookStoreInformationBus
 	 * @return
 	 * @throws BookStoreInformationException
 	 */
+	@Transactional
 	public ResponseEntity<List<String>> searchMediaCoverage(@PathVariable("isbn") String isbn)
 			throws BookStoreInformationException {
 		HttpEntity entity = null;
@@ -98,10 +101,12 @@ public class BookStoreInformationBusinessImpl implements BookStoreInformationBus
 						env.getProperty("error.book.isbn.not.found.code")));
 		String title = bookStoreInformation.getTitle();
 		try {
+			log.info("going to hit the url {} for fetching media coverage ", mediaCoverageUrl);
 			mediaCoverageList = restTemplate.exchange(mediaCoverageUrl, HttpMethod.GET, entity,
 					new ParameterizedTypeReference<List<MediaCoverageInformation>>() {
 					});
 		} catch (Exception e) {
+			log.error("exception occured while connecting the url {} ",mediaCoverageUrl);
 			throw new BookStoreInformationException(env.getProperty("error.connection.exception.message"),
 					env.getProperty("error.connection.exception.code"));
 		}
@@ -125,16 +130,18 @@ public class BookStoreInformationBusinessImpl implements BookStoreInformationBus
 	public BookStoreInformation purchaseBook(BookStoreInformation buyBookInformation, Integer quantity) throws BookStoreInformationException {
 		// TODO Auto-generated method stub
 		if (quantity < 0 || quantity > buyBookInformation.getNumberOfCopies()) {
+			log.error("invalid quantity found");
 			throw new BookStoreInformationException(env.getProperty("error.book.incorrect.quantity.message") + "We have Only " + buyBookInformation.getNumberOfCopies() + " copies left.",
 					env.getProperty("error.book.incorrect.quantity.code"));
 		} else {
 			buyBookInformation.setNumberOfCopies(buyBookInformation.getNumberOfCopies() - quantity);
-
 			if (buyBookInformation.getNumberOfCopies() == 0) {
+				log.info("no copies left.Going to remove the book from bookstore");
 				bookInformationRepository.deleteById(buyBookInformation.getId());
 				return null;
 			} else {
 				bookInformationRepository.save(buyBookInformation);
+				log.info("updating the book information with quantity {} ",buyBookInformation.getNumberOfCopies());
 				return buyBookInformation;
 
 			}

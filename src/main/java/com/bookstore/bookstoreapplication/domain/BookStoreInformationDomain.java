@@ -1,4 +1,4 @@
-package com.bookstore.bookstoreapplication.buisness;
+package com.bookstore.bookstoreapplication.domain;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.bookstore.bookstoreapplication.entity.BookStoreInformation;
 import com.bookstore.bookstoreapplication.exception.BookStoreInformationException;
 
-public interface BookStoreInformationBusiness {
+public interface BookStoreInformationDomain {
 
 	/**
 	 * @param bookStoreInformation
